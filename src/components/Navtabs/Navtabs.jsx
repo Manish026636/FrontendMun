@@ -1,55 +1,53 @@
-import { useState } from "react";
-import Tab from "./Navtabs/Tab";
+
+import React, { useState } from 'react'
+
 
 const NavTabs = () => {
-  const [activeTab, setActiveTab] = useState("tab1");
 
-  const handleClick = (tab) => {
-    setActiveTab(tab);
-  };
- const tabs = ["Tab 1","Tab 2","Tab 3"]
+  const tabs = [
+    { name: "Archives", link:"#" },
+    { name: "Uploads", link:"#" },
+    { name: "Analytics", link:"#" },
+    { name: "Services", link:"#" },
+    { name: "Informations", link:"#" },
+  ]
+
+  const [currentTab, setCurrentTab] = useState("Services")
+
   return (
-    <>
-    <div className="container mx-auto">
-    <div className="flex flex-col">
-      <nav className="flex flex-row space-x-4 mb-4">
-        {tabs.map((tabName)=>{
-                <Tab tabName={tabName}/>
-        })}
-        {/* <button
-          className={`${
-            activeTab === "tab1" ? "bg-blue-500 text-white" : "bg-gray-300"
-          } py-2 px-4 rounded-lg`}
-          onClick={() => handleClick("tab1")}
+    <div className="mx-auto w-full max-w-5xl sm:border-b-2 border-gray-200">
+        
+      {/* :SMALL DEVICES */}
+      <div className="mx-auto max-w-md sm:hidden rounded-lg border border-gray-300 overflow-hidden">
+        <label htmlFor="current-tab" className="sr-only">Select a tab</label>
+        <select name="current-tab" id="current-tab" defaultValue={tabs.find(tab => tab.name === currentTab).name}
+          className="form-select w-full sm:w-auto block border-none text-sm text-gray-500 font-semibold cursor-pointer focus:ring-0"
         >
-          Tab 1
-        </button> */}
-        {/* <button
-          className={`${
-            activeTab === "tab2" ? "bg-blue-500 text-white" : "bg-gray-300"
-          } py-2 px-4 rounded-lg`}
-          onClick={() => handleClick("tab2")}
-        >
-          Tab 2
-        </button>
-        <button
-          className={`${
-            activeTab === "tab3" ? "bg-blue-500 text-white" : "bg-gray-300"
-          } py-2 px-4 rounded-lg`}
-          onClick={() => handleClick("tab3")}
-        >
-          Tab 3
-        </button> */}
-      </nav>
-      <div className="bg-gray-100 p-4 rounded-lg">
-        {activeTab === "tab1" && <p>Content of tab 1 goes here</p>}
-        {activeTab === "tab2" && <p>Content of tab 2 goes here</p>}
-        {activeTab === "tab3" && <p>Content of tab 3 goes here</p>}
+          {tabs.map(tab => (
+            <option key={tab.name} value={tab.name} onClick={() => setCurrentTab(tab.name)}>{tab.name}</option>
+          ))
+          }
+        </select>
       </div>
-    </div>
-    </div>
-    </>
-  );
-};
 
-export default NavTabs;
+
+
+      {/* :LARGE DEVICES */}
+      <nav className="-mb-0.5 hidden sm:block" aria-label="Tabs">
+        <ul className="flex space-x-5">
+          {tabs.map(tab => (
+            <li key={tab.name} className={`border-b-2 text-base ${tab.name === currentTab ? "border-pink-600 text-pink-600" : "border-transparent text-gray-400 hover:text-gray-500 hover:border-gray-300"}`}>
+              <button type="button" className="px-4 pb-5 font-semibold" onClick={() => setCurrentTab(tab.name)}>
+                {tab.name}
+              </button>
+            </li>
+          ))
+          }
+        </ul>
+      </nav>
+
+    </div>
+  )
+}
+
+export default NavTabs

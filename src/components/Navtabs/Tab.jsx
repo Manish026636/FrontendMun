@@ -9,7 +9,7 @@ const Tab = ({tabName,handleClick,activeTab}) => {
           } py-2 px-4 rounded-lg`}
           onClick={() => handleClick(tabName)}
         >
-         tabName
+        { tabName}
         </button>
     
   )
